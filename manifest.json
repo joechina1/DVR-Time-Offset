@@ -1,15 +1,20 @@
 {
-  "name": "DVR Time Converter",
-  "short_name": "DVR Converter",
-  "start_url": "index.html",
-  "display": "standalone",
-  "background_color": "#f4f7fb",
-  "theme_color": "#003366",
+  "name": "Freeport Detectives DVR Time Converter",
+  "short_name": "DVR Time Converter",
   "icons": [
     {
       "src": "cam.png",
       "sizes": "192x192",
       "type": "image/png"
+    },
+    {
+      "src": "cam.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
-  ]
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#003366",
+  "background_color": "#f4f7fb"
 }
