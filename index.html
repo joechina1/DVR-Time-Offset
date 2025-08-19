@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DVR Time Converter</title>
+  <link rel="manifest" href="manifest.json" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fb;
+      color: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .card {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+      color: #003366;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #003366;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0055a5;
+    }
+    .result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background-color: #e6f0ff;
+      border-left: 4px solid #003366;
+      border-radius: 6px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>DVR Time Converter</h1>
+    <label for="realNow">Current Real Time</label>
+    <input type="time" id="realNow" />
+
+    <label for="dvrNow">Current DVR Time</label>
+    <input type="time" id="dvrNow" />
+
+    <label for="realPast">Real Time to View</label>
+    <input type="time" id="realPast" />
+
+    <button onclick="convertTime()">Convert</button>
+
+    <div id="result" class="result" style="display:none;"></div>
+  </div>
+
+  <script>
+    function toMinutes(timeStr) {
+      const [h, m] = timeStr.split(":").map(Number);
+      return h * 60 + m;
+    }
+
+    function toHHMM(minutes) {
+      minutes = (minutes + 1440) % 1440; // keep in 0-1439
+      const h = Math.floor(minutes / 60).toString().padStart(2, "0");
+      const m = (minutes % 60).toString().padStart(2, "0");
+      return `${h}:${m}`;
+    }
+
+    function convertTime() {
+      const realNow = document.getElementById("realNow").value;
+      const dvrNow = document.getElementById("dvrNow").value;
+      const realPast = document.getElementById("realPast").value;
+
+      if (!realNow || !dvrNow || !realPast) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      const offset = toMinutes(dvrNow) - toMinutes(realNow);
+      const dvrTarget = toMinutes(realPast) + offset;
+
+      document.getElementById("result").style.display = "block";
+      document.getElementById("result").innerText =
+        "DVR Time to Search: " + toHHMM(dvrTarget);
+    }
+  </script>
+</body>
+</html>
